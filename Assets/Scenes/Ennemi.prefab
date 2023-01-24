@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1453266788457728401}
   - component: {fileID: 7415785643862117840}
+  - component: {fileID: -5972121814159556674}
   m_Layer: 0
   m_Name: Ennemi
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-5972121814159556674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7703891209787915078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7792a1140625544b66541e459a5bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Niveau: 0
