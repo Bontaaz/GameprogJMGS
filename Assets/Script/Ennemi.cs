@@ -4,16 +4,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Ennemi : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int Niveau;
-    
+    public int niveau;
+    public AudioClip SoundToPlay;
 
 
-    public Ennemi(int niveau)
+    public Ennemi(int Niveau)
     {
-        Niveau = niveau;
+        niveau = Niveau;
         
     }
 
@@ -23,10 +24,11 @@ public class Ennemi : MonoBehaviour
         
         if (other.CompareTag("Player"))
         {
-            
-            GameManager.instance.UpdateNiveau(Niveau);
+            GameManager.instance.UpdateNiveau(niveau);
             GameManager.instance.EnemyDead();
+            AudioSource.PlayClipAtPoint(SoundToPlay, Camera.main.transform.position);
             Destroy(gameObject);
+
         }
     }
     

@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7792a1140625544b66541e459a5bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Niveau: 0
+  niveau: 0
+  SoundToPlay: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
 --- !u!68 &8646654908586973674
 EdgeCollider2D:
   m_ObjectHideFlags: 0

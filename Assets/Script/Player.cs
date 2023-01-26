@@ -7,18 +7,13 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float Speed = 1;
-    public int Niveau;
+    public float speed = 1;
+    public int niveau;
    
-    public Player(float speed, int niveau)
-    {
-        Speed = speed;
-        Niveau = niveau;
-    }
-
 
     void Update()
     {
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         
