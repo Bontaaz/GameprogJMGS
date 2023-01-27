@@ -9,13 +9,22 @@ public class Player : MonoBehaviour
 
     public float speed = 1;
     public int niveau;
+    
    
 
     void Update()
     {
+        float horizontal = Input.GetAxisRaw("Mouse X")*GameManager.instance.ReturnSens();
+        float vertical = Input.GetAxisRaw("Mouse Y")* GameManager.instance.ReturnSens();
+        if (horizontal == 0 || vertical == 0)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
+        }
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+       
+        
+        
         
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
         Vector3 direction = new Vector3(horizontal, vertical,0);

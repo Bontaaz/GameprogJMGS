@@ -6,6 +6,7 @@ using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -23,12 +24,18 @@ public class GameManager : MonoBehaviour
     private GameObject _textNiveauPlayer;
     private GameObject _niveauEnCours;
     public static GameManager instance;
+    public AudioClip audioBack;
+    public AudioClip dead;
+    public AudioSource sourceaudio;
+    public GameObject restartbut;
+    public GameObject menu;
     public int niveau = 1;
     public int enemyCount = 0;
     public int playerNiveau = 1;
     private int _enemySpawn = 3;
     private bool _gameOver = false;
     private int _sizeCam = 11;
+    public float sens;
 
     private void Awake()
     {
@@ -36,14 +43,16 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-
+        restartbut.SetActive(false);
         _niveauEnCours = Instantiate(new GameObject("TextNiveauPlayer"));
         _niveauEnCours.AddComponent<TextMeshPro>();
         _niveauEnCours.GetComponent<TextMeshPro>().fontSize = 100;
         _niveauEnCours.transform.SetParent(canvas.transform, false);
-        _niveauEnCours.transform.localPosition = new Vector2(-589f, 323f);
+        _niveauEnCours.transform.localPosition = new Vector2(124f, -71f);
         _niveauEnCours.transform.localScale = new Vector3(3.96f, 3.96f, 3.96f);
         _niveauEnCours.GetComponent<RectTransform>().sizeDelta = new Vector2(51, 20);
+        _niveauEnCours.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+        _niveauEnCours.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
         _niveauEnCours.GetComponent<TextMeshPro>().text = "Niveau " + niveau.ToString();
         _player = Instantiate(playerPrefab);
         cameraMain.GetComponent<Camera>().orthographicSize = _sizeCam;
@@ -56,16 +65,36 @@ public class GameManager : MonoBehaviour
         _player.GetComponent<Player>().tag = "Player";
         _textNiveauPlayer.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 5);
         _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Niveau " + playerNiveau.ToString();
+        sourceaudio.clip = audioBack;
+        sourceaudio.Play();
         EnemiesSpawn();
 
     }
 
     void Update()
     {
+
+        
         if (!_gameOver)
         {
             _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Niveau " + playerNiveau.ToString();
 
+            if (_player.GetComponent<UnityEngine.Transform>().localPosition.x > ((_sizeCam - 1) * 2))
+            {
+                _player.transform.localPosition = new Vector2((-(_sizeCam - 1) * 2), _player.GetComponent<UnityEngine.Transform>().localPosition.y);
+            }
+            if (_player.GetComponent<UnityEngine.Transform>().localPosition.x < (-(_sizeCam - 1) * 2))
+            {
+                _player.transform.localPosition = new Vector2(((_sizeCam - 1) * 2), _player.GetComponent<UnityEngine.Transform>().localPosition.y);
+            }
+            if (_player.GetComponent<UnityEngine.Transform>().localPosition.y > ((_sizeCam)))
+            {
+                _player.transform.localPosition = new Vector2(_player.GetComponent<UnityEngine.Transform>().localPosition.x, -(_sizeCam));
+            }
+            if (_player.GetComponent<UnityEngine.Transform>().localPosition.y < (-(_sizeCam)))
+            {
+                _player.transform.localPosition = new Vector2(_player.GetComponent<UnityEngine.Transform>().localPosition.x, (_sizeCam));
+            }
 
             if (0 == enemyCount)
             {
@@ -163,16 +192,37 @@ public class GameManager : MonoBehaviour
         enemyCount--;
 
 
+
     }
 
     private void GameOver()
     {
         (this)._gameOver = true;
+        sourceaudio.Stop();
+        sourceaudio.clip = dead;
+        sourceaudio.Play();
+        restartbut.SetActive(true);
+        menu.SetActive(true);
         Destroy(_player);
         GameObject gameover = Instantiate(new GameObject("TextNiveauPlayer"));
         gameover.AddComponent<TextMeshPro>();
         gameover.GetComponent<TextMeshPro>().fontSize = 30;
         gameover.GetComponent<TextMeshPro>().color = UnityEngine.Color.red;
-        gameover.GetComponent<TextMeshPro>().text = "GAMEOVER";
+        gameover.GetComponent<TextMeshPro>().text = "GAME OVER";
+    }
+
+    public void RestartBut()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("sc");
+    }
+
+    public float ReturnSens()
+    {
+        return sens;
     }
 }
