@@ -16,7 +16,7 @@ public class SettingsMenu : MonoBehaviour
     Resolution[] resolutions;
     public void Start()
     {
-        Debug.Log("hello");
+        
         resolutions = Screen.resolutions.Select(resolution =>new Resolution{width = resolution.width, height = resolution.height}).Distinct().ToArray();
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -40,7 +40,7 @@ public class SettingsMenu : MonoBehaviour
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20f);
-        Debug.Log(audioMixer.name+ " " + volume);
+        
     }
 
     public void SetFullScreen(bool isFullScreen)

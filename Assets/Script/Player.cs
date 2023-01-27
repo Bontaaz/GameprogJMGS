@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxisRaw("Mouse Y")* GameManager.instance.ReturnSens();
         if (horizontal == 0 || vertical == 0)
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            horizontal = Input.GetAxisRaw("Horizontal") * GameManager.instance.ReturnSens();
+            vertical = Input.GetAxisRaw("Vertical") * GameManager.instance.ReturnSens();
         }
 
        

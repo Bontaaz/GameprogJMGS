@@ -48,19 +48,22 @@ public class GameManager : MonoBehaviour
         _niveauEnCours.AddComponent<TextMeshPro>();
         _niveauEnCours.GetComponent<TextMeshPro>().fontSize = 100;
         _niveauEnCours.transform.SetParent(canvas.transform, false);
-        _niveauEnCours.transform.localPosition = new Vector2(124f, -71f);
-        _niveauEnCours.transform.localScale = new Vector3(3.96f, 3.96f, 3.96f);
-        _niveauEnCours.GetComponent<RectTransform>().sizeDelta = new Vector2(51, 20);
-        _niveauEnCours.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
-        _niveauEnCours.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+        var transniv = _niveauEnCours.transform;
+        transniv.localPosition = new Vector2(124f, -71f);
+        transniv.localScale = new Vector3(3.96f, 3.96f, 3.96f);
+        var nivencour = _niveauEnCours.GetComponent<RectTransform>();
+        nivencour.sizeDelta = new Vector2(51, 20);
+        nivencour.anchorMin = new Vector2(0, 1);
+        nivencour.anchorMax = new Vector2(0, 1);
         _niveauEnCours.GetComponent<TextMeshPro>().text = "Niveau " + niveau.ToString();
         _player = Instantiate(playerPrefab);
         cameraMain.GetComponent<Camera>().orthographicSize = _sizeCam;
         _textNiveauPlayer = Instantiate(new GameObject("TextNiveauPlayer"));
         _textNiveauPlayer.AddComponent<TextMeshPro>();
-        _textNiveauPlayer.transform.SetParent(_player.transform, false);
-        _textNiveauPlayer.transform.localPosition = new Vector2(0.39f, 1.39f);
-        _textNiveauPlayer.transform.localScale = new Vector3(0.14f, 0.14f, 0.14f);
+        var textniveau = _textNiveauPlayer.transform;
+        textniveau.SetParent(_player.transform, false);
+        textniveau.transform.localPosition = new Vector2(0.39f, 1.39f);
+        textniveau.transform.localScale = new Vector3(0.14f, 0.14f, 0.14f);
         _player.GetComponent<Player>().niveau = playerNiveau;
         _player.GetComponent<Player>().tag = "Player";
         _textNiveauPlayer.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 5);
@@ -78,7 +81,8 @@ public class GameManager : MonoBehaviour
         if (!_gameOver)
         {
             _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Niveau " + playerNiveau.ToString();
-
+            
+            //transfert du joueur de bas en haut et de gauche a droite a la sortie de l'ecran
             if (_player.GetComponent<UnityEngine.Transform>().localPosition.x > ((_sizeCam - 1) * 2))
             {
                 _player.transform.localPosition = new Vector2((-(_sizeCam - 1) * 2), _player.GetComponent<UnityEngine.Transform>().localPosition.y);
@@ -172,6 +176,7 @@ public class GameManager : MonoBehaviour
         _enemySpawn = (int)temp;
         niveau += 1;
         _sizeCam++;
+        _textNiveauPlayer.GetComponent<TextMeshPro>().fontSize += (_sizeCam/2);
         _niveauEnCours.GetComponent<TextMeshPro>().text = "Niveau " + niveau.ToString();
         EnemiesSpawn();
     }
@@ -205,10 +210,10 @@ public class GameManager : MonoBehaviour
         menu.SetActive(true);
         Destroy(_player);
         GameObject gameover = Instantiate(new GameObject("TextNiveauPlayer"));
-        gameover.AddComponent<TextMeshPro>();
-        gameover.GetComponent<TextMeshPro>().fontSize = 30;
-        gameover.GetComponent<TextMeshPro>().color = UnityEngine.Color.red;
-        gameover.GetComponent<TextMeshPro>().text = "GAME OVER";
+        var gameOver = gameover.AddComponent<TextMeshPro>();
+        gameOver.fontSize = 30;
+        gameOver.color = UnityEngine.Color.red;
+        gameOver.text = "GAME OVER";
     }
 
     public void RestartBut()
