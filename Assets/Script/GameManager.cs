@@ -67,7 +67,9 @@ public class GameManager : MonoBehaviour
         _player.GetComponent<Player>().niveau = playerNiveau;
         _player.GetComponent<Player>().tag = "Player";
         _textNiveauPlayer.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 5);
-        _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Niveau " + playerNiveau.ToString();
+        _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Lv" + playerNiveau.ToString();
+        _textNiveauPlayer.GetComponent<TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
+        _textNiveauPlayer.GetComponent<TextMeshPro>().enableWordWrapping= false;
         sourceaudio.clip = audioBack;
         sourceaudio.Play();
         EnemiesSpawn();
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
         
         if (!_gameOver)
         {
-            _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Niveau " + playerNiveau.ToString();
+            _textNiveauPlayer.GetComponent<TextMeshPro>().text = "Lv" + playerNiveau.ToString();
             
             //transfert du joueur de bas en haut et de gauche a droite a la sortie de l'ecran
             if (_player.GetComponent<UnityEngine.Transform>().localPosition.x > ((_sizeCam - 1) * 2))
@@ -163,7 +165,9 @@ public class GameManager : MonoBehaviour
             text.transform.SetParent(enemy.transform,false);
             text.transform.localPosition = new Vector2(0.45f, 2.19f);
             text.transform.localScale = new Vector3(0.21f, 0.21f, 0.21f);
-            text.GetComponent<TextMeshPro>().text = "Niveau " + enemyLevel.ToString();
+            text.GetComponent<TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
+            text.GetComponent<TextMeshPro>().enableWordWrapping = false;
+            text.GetComponent<TextMeshPro>().text = "Lv" + enemyLevel.ToString();
             text.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 5);           
             enemyCount++;
             SpawnOk = false;
